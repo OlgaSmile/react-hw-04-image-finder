@@ -1,19 +1,18 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './Searchbar.module.css';
 import { ReactComponent as SearchSVG } from '../../svg/SearchSVG.svg';
 
-export default class Searchbar extends Component {
-  state = {
-    value: '',
-  };
-  onChange = ({ target: { value } }) => {
-    this.setState({ value });
+export default function Searchbar ({onSubmit}) {
+
+  const [value, setValue] = useState('');
+
+  function onChange ({ target: { value } }) {
+    setValue( value );
   };
 
-  render() {
     return (
       <header className={css.Searchbar}>
-        <form className={css.SearchForm} onSubmit={this.props.onSubmit}>
+        <form className={css.SearchForm} onSubmit={onSubmit}>
           <button type="submit" className={css.SearchFormButton}>
             <span className={css.SearchFormButtonLabel}></span>
             <SearchSVG width="32" height="32" fill="black" />
@@ -25,11 +24,10 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.onChange}
-            value={this.state.value}
+            onChange={onChange}
+            value={value}
           />
         </form>
       </header>
     );
   }
-}
